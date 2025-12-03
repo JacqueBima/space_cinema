@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPACE CINEMA | Ғарыштық кино</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="language-switcher">
+                    <i class="fas fa-globe"></i>
+                    <select>
+                        <option value="kk">Қазақша</option>
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="top-links">
+                    <a href="#"><i class="fas fa-newspaper"></i> Жаңалықтар</a>
+                    <a href="#"><i class="fas fa-building"></i> Біз туралы</a>
+                    <a href="#"><i class="fas fa-handshake"></i> Серіктестер</a>
+                    <a href="#"><i class="fas fa-phone"></i> Байланыс</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <div class="container">
+            <nav class="main-nav">
+                <!-- LOGO -->
+                <div class="logo">
+                    <a href="index.html">
+                        <div class="logo-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-main">SPACE</span>
+                            <span class="logo-sub">CINEMA</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- MAIN NAVIGATION -->
+                <ul class="nav-menu">
+                    <li><a href="#movies"><i class="fas fa-film"></i> Фильмдер</a></li>
+                    <li><a href="#cinemas"><i class="fas fa-map-marker-alt"></i> Кинотеатрлар</a></li>
+                    <li><a href="#experience"><i class="fas fa-vr-cardboard"></i> Тәжірибе</a></li>
+                    <li><a href="#offers"><i class="fas fa-tag"></i> Арнайы ұсыныстар</a></li>
+                </ul>
+
+                <!-- USER ACTIONS -->
+                <div class="user-actions">
+                    <button class="btn-login" id="loginBtn">
+                        <i class="fas fa-user-astronaut"></i>
+                        <span>Кіру</span>
+                    </button>
+                    <button class="btn-tickets" id="ticketsBtn">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Билеттерім</span>
+                    </button>
+                    <button class="btn-search" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <!-- MOBILE MENU -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar" id="searchBar">
+        <div class="container">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Фильмді немесе актерді іздеу...">
+                <button class="close-search" id="closeSearchBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SLIDER -->
+    <section class="hero-slider">
+        <div class="slider-container">
+            <!-- Slide 1 -->
+            <div class="slide active">
+                <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')"></div>
+                <div class="container">
+                    <div class="slide-content">
+                        <div class="movie-badge">IMAX</div>
+                        <h1 class="slide-title">ДЮНА: 2-БӨЛІМ</h1>
+                        <p class="slide-description">Ғарыштық эпос жалғасуда. Фримендердің соғысы жаңа деңгейге көтеріледі.</p>
+                        <div class="slide-meta">
+                            <span><i class="fas fa-clock"></i> 2сағ 46мин</span>
+                            <span><i class="fas fa-star"></i> 8.9/10</span>
+                            <span><i class="fas fa-calendar"></i> 15 Наурыздан бастап</span>
+                        </div>
+                        <div class="slide-actions">
+                            <button class="btn-trailer">
+                                <i class="fas fa-play"></i> Трейлерді көру
+                            </button>
+                            <button class="btn-booking">
+                                <i class="fas fa-ticket-alt"></i> Билет сатып алу
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')"></div>
+                <div class="container">
+                    <div class="slide-content">
+                        <div class="movie-badge">4DX</div>
+                        <h1 class="slide-title">ҒАРЫШТЫҚ САЯХАТШЫ 2</h1>
+                        <p class="slide-description">Жаңа планеталарды іздеуге шыққан қайсар ғалымдардың саяхаты.</p>
+                        <div class="slide-actions">
+                            <button class="btn-trailer">
+                                <i class="fas fa-play"></i> Трейлерді көру
+                            </button>
+                            <button class="btn-booking">
+                                <i class="fas fa-ticket-alt"></i> Билет сатып алу
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slider Controls -->
+            <div class="slider-controls">
+                <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK BOOKING -->
+    <section class="quick-booking">
+        <div class="container">
+            <div class="booking-card">
+                <h2><i class="fas fa-bolt"></i> ТЕЗ БРОНДЕУ</h2>
+                <form class="booking-form" id="quickBookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-film"></i> Фильм</label>
+                            <select id="quickMovie">
+                                <option value="">Фильм таңдаңыз</option>
+                                <option value="dune2">Дюна: 2-бөлім</option>
+                                <option value="interstellar2">Ғарыштық саяхатшы 2</option>
+                                <option value="martian2">Марс саяхатшысы 2</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Кинотеатр</label>
+                            <select id="quickCinema">
+                                <option value="">Кинотеатр таңдаңыз</option>
+                                <option value="galaxy">SPACE Galaxy</option>
+                                <option value="nebula">SPACE Nebula</option>
+                                <option value="orbit">SPACE Orbit</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Күн</label>
+                            <input type="date" id="quickDate">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Уақыт</label>
+                            <select id="quickTime">
+                                <option value="">Уақыт таңдаңыз</option>
+                                <option value="10:00">10:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="22:00">22:00</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn-find">
+                            <i class="fas fa-search"></i> СЕАНСТАРДЫ ТАБУ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOW PLAYING -->
+    <section id="movies" class="now-playing">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-fire"></i> ҚАЗІР ЭКРАНДА</h2>
+                <a href="#" class="view-all">Барлығын көру <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="movies-grid">
+                <!-- Movie 1 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450/0A0E17/00E5E8?text=DUNE+2" alt="Дюна 2">
+                        <div class="movie-badge">IMAX</div>
+                        <div class="movie-overlay">
+                            <button class="btn-quick-view" data-movie="1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3>ДЮНА: 2-БӨЛІМ</h3>
+                        <div class="movie-meta">
+                            <span><i class="fas fa-clock"></i> 2сағ 46мин</span>
+                            <span><i class="fas fa-star"></i> 8.9/10</span>
+                        </div>
+                        <div class="movie-genre">
+                            <span>Фантастика</span>
+                            <span>Әрекет</span>
+                            <span>Драма</span>
+                        </div>
+                        <button class="btn-buy" data-movie="1">
+                            <i class="fas fa-ticket-alt"></i> БИЛЕТ САТЫП АЛУ
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Add more movies similarly -->
+                <!-- Movie 2 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450/0A0E17/8A2BE2?text=INTERSTELLAR+2" alt="Интерстеллар 2">
+                        <div class="movie-badge">4DX</div>
+                    </div>
+                    <div class="movie-info">
+                        <h3>ҒАРЫШТЫҚ САЯХАТШЫ 2</h3>
+                        <div class="movie-meta">
+                            <span><i class="fas fa-clock"></i> 2сағ 30мин</span>
+                            <span><i class="fas fa-star"></i> 9.1/10</span>
+                        </div>
+                        <button class="btn-buy" data-movie="2">
+                            <i class="fas fa-ticket-alt"></i> БИЛЕТ САТЫП АЛУ
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Movie 3 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450/0A0E17/FF6B35?text=MARTIAN+2" alt="Марсианин 2">
+                        <div class="movie-badge">DOLBY</div>
+                    </div>
+                    <div class="movie-info">
+                        <h3>МАРС САЯХАТШЫСЫ 2</h3>
+                        <div class="movie-meta">
+                            <span><i class="fas fa-clock"></i> 2сағ 20мин</span>
+                            <span><i class="fas fa-star"></i> 8.5/10</span>
+                        </div>
+                        <button class="btn-buy" data-movie="3">
+                            <i class="fas fa-ticket-alt"></i> БИЛЕТ САТЫП АЛУ
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Movie 4 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450/0A0E17/9370DB?text=GRAVITY+2" alt="Гравитация 2">
+                        <div class="movie-badge">IMAX</div>
+                    </div>
+                    <div class="movie-info">
+                        <h3>ГРАВИТАЦИЯ 2</h3>
+                        <div class="movie-meta">
+                            <span><i class="fas fa-clock"></i> 2сағ 15мин</span>
+                            <span><i class="fas fa-star"></i> 8.7/10</span>
+                        </div>
+                        <button class="btn-buy" data-movie="4">
+                            <i class="fas fa-ticket-alt"></i> БИЛЕТ САТЫП АЛУ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CINEMAS SECTION -->
+    <section id="cinemas" class="cinemas-section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-map-marked-alt"></i> БІЗДІҢ КИНОТЕАТРЛАР</h2>
+                <a href="#" class="view-all">Барлық кинотеатрлар <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="cinemas-grid">
+                <div class="cinema-card">
+                    <div class="cinema-image">
+                        <img src="https://via.placeholder.com/400x250/1A2A3A/00E5E8?text=SPACE+GALAXY" alt="Space Galaxy">
+                    </div>
+                    <div class="cinema-info">
+                        <h3>SPACE CINEMA GALAXY</h3>
+                        <p class="cinema-address">
+                            <i class="fas fa-location-dot"></i> Астана, Дүниежүзілік көшесі, 15
+                        </p>
+                        <div class="cinema-features">
+                            <span class="feature-tag">IMAX</span>
+                            <span class="feature-tag">4DX</span>
+                            <span class="feature-tag">Dolby Atmos</span>
+                            <span class="feature-tag">VR Zone</span>
+                        </div>
+                        <div class="cinema-actions">
+                            <button class="btn-schedule">
+                                <i class="fas fa-calendar"></i> Кесте
+                            </button>
+                            <button class="btn-directions">
+                                <i class="fas fa-route"></i> Жол
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add more cinemas -->
+            </div>
+        </div>
+    </section>
+
+    <section class="genres-section">
+    <div class="container">
+        <h2><i class="fas fa-filter"></i> ФИЛЬМДЕРДІ ЖАНР БОЙЫНША ІЗДЕУ</h2>
+        
+        <div class="genres-filter">
+            <button class="genre-btn active" data-genre="all">Барлығы</button>
+            <!-- Жанры добавляются через JS -->
+        </div>
+        
+        <div class="search-filter">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="movieSearch" placeholder="Фильм немесе актер аты...">
+                <button class="btn-clear-search" id="clearSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sort-filter">
+                <select id="sortMovies">
+                    <option value="popular">Танымалдылық</option>
+                    <option value="rating">Рейтинг</option>
+                    <option value="new">Жаңа</option>
+                    <option value="old">Ескі</option>
+                    <option value="az">А-Я</option>
+                    <option value="za">Я-А</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- СЕКЦИЯ СКОРО В КИНО -->
+<section class="coming-soon">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-clock"></i> ЖАҚЫНДА ЭКРАНДА</h2>
+            <a href="#" class="view-all">Барлығын көру <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="movies-grid" id="comingSoonGrid">
+            <!-- Скоро в кино загружается через JS -->
+        </div>
+    </div>
+</section>
+
+<!-- МОДАЛЬНОЕ ОКНО ФИЛЬМА (как в Kinopark) -->
+<div class="modal" id="movieDetailModal">
+    <div class="modal-content movie-detail-modal">
+        <button class="close-modal">&times;</button>
+        
+        <div class="movie-detail-container">
+            <!-- Левая колонка -->
+            <div class="movie-detail-left">
+                <div class="movie-detail-poster">
+                    <img id="detailPoster" src="" alt="">
+                    <div class="movie-detail-badge" id="detailBadge"></div>
+                </div>
+                
+                <div class="movie-detail-actions">
+                    <button class="btn-watch-trailer" id="watchTrailerBtn">
+                        <i class="fas fa-play"></i> ТРЕЙЛЕРДІ КӨРУ
+                    </button>
+                    <button class="btn-book-now" id="bookNowBtn">
+                        <i class="fas fa-ticket-alt"></i> БРОНДАУ
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Правая колонка -->
+            <div class="movie-detail-right">
+                <h1 id="detailTitle"></h1>
+                <p class="movie-original-title" id="detailOriginalTitle"></p>
+                
+                <div class="movie-detail-meta">
+                    <span class="movie-rating" id="detailRating"></span>
+                    <span class="movie-duration" id="detailDuration"></span>
+                    <span class="movie-year" id="detailYear"></span>
+                    <span class="movie-age" id="detailAge"></span>
+                </div>
+                
+                <div class="movie-genres" id="detailGenres"></div>
+                
+                <div class="movie-description-full" id="detailDescription"></div>
+                
+                <div class="movie-crew">
+                    <div class="crew-item">
+                        <strong>Режиссер:</strong>
+                        <span id="detailDirector"></span>
+                    </div>
+                    <div class="crew-item">
+                        <strong>Актерлар:</strong>
+                        <span id="detailCast"></span>
+                    </div>
+                </div>
+                
+                <div class="movie-showtimes">
+                    <h3><i class="fas fa-clock"></i> Сеанс уақыттары</h3>
+                    <div class="showtime-slots" id="detailShowtimes"></div>
+                </div>
+                
+                <div class="movie-price">
+                    <strong>Билет бағасы:</strong>
+                    <span class="price-value" id="detailPrice"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ТРЕЙЛЕРА -->
+<div class="modal" id="trailerModal">
+    <div class="modal-content trailer-modal">
+        <button class="close-modal">&times;</button>
+        <div class="trailer-container" id="trailerContainer">
+            <!-- YouTube плеер загружается сюда -->
+        </div>
+    </div>
+</div>
+
+<!-- index.html-ге қос -->
+
+<!-- СЕАНСТАР БӨЛІМІ -->
+<section class="showtimes-section" id="showtimes">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-calendar-alt"></i> БҮГІНГІ СЕАНСТАР</h2>
+            <div class="date-selector">
+                <button class="date-nav" onclick="changeShowtimeDate(-1)"><i class="fas fa-chevron-left"></i></button>
+                <span id="currentShowtimeDate">Бүгін</span>
+                <button class="date-nav" onclick="changeShowtimeDate(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        
+        <div class="cinema-tabs">
+            <!-- Кинотеатрлар қосылады -->
+        </div>
+        
+        <div class="showtimes-container" id="showtimesContainer">
+            <!-- Сеанстар JS арқылы толтырылады -->
+        </div>
+    </div>
+</section>
+
+<!-- index.html-ге қос -->
+
+<!-- АРНАЙЫ ҰСЫНЫСТАР -->
+<section class="special-offers" id="offers">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-gift"></i> АРНАЙЫ ҰСЫНЫСТАР</h2>
+            <a href="#" class="view-all">Барлық акциялар <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="offers-grid">
+            <!-- 1. Беспредельный понедельник -->
+            <div class="offer-card hot-offer">
+                <div class="offer-badge">HOT</div>
+                <div class="offer-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3>ШЕКСІЗ ДҮЙСЕНБІ</h3>
+                <p class="offer-description">Кез келген фильм, кез келген зал</p>
+                <div class="offer-price">
+                    <span class="old-price">1500 ₸</span>
+                    <span class="new-price">999 ₸</span>
+                </div>
+                <button class="btn-offer" onclick="activateOffer('monday')">
+                    <i class="fas fa-bolt"></i> ҚОЛДАНУ
+                </button>
+            </div>
+            
+            <!-- 2. Студенттік жеңілдік -->
+            <div class="offer-card student-offer">
+                <div class="offer-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>СТУДЕНТТЕРГЕ 30%</h3>
+                <p class="offer-description">Студенттік куәлік көрсетумен</p>
+                <div class="offer-discount">-30%</div>
+                <button class="btn-offer" onclick="activateOffer('student')">
+                    <i class="fas fa-bolt"></i> ҚОЛДАНУ
+                </button>
+            </div>
+            
+            
+            <!-- 3. Таңертеңгі сеанс -->
+            <div class="offer-card morning-offer">
+                <div class="offer-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <h3>ТАҢЕРТЕҢГІ СЕАНС</h3>
+                <p class="offer-description">12:00-ға дейінгі барлық сеанстар</p>
+                <div class="offer-discount">-50%</div>
+                <button class="btn-offer" onclick="activateOffer('morning')">
+                    <i class="fas fa-bolt"></i> ҚОЛДАНУ
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="experience-section">
+        <div class="container">
+            <h2><i class="fas fa-vr-cardboard"></i> SPACE CINEMA ТӘЖІРИБЕСІ</h2>
+            
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="exp-icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <h3>IMAX LASER</h3>
+                    <p>Ең үлкен экрандар мен лазерлік проекция</p>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="exp-icon">
+                        <i class="fas fa-couch"></i>
+                    </div>
+                    <h3>4DX</h3>
+                    <p>Қозғалатын орындықтар мен арнайы эффектілер</p>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="exp-icon">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3>DOLBY ATMOS</h3>
+                    <p>Көлемді дыбыс жүйесі</p>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="exp-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3>VR ZONE</h3>
+                    <p>Виртуалды шындық аймағы</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <i class="fas fa-rocket"></i>
+                        <span>SPACE<br>CINEMA</span>
+                    </div>
+                    <p>Ғарыштық кино тәжірибесі</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>ФИЛЬМДЕР</h4>
+                    <ul>
+                        <li><a href="#">Қазір экранда</a></li>
+                        <li><a href="#">Жақында</a></li>
+                        <li><a href="#">IMAX</a></li>
+                        <li><a href="#">4DX</a></li>
+                        <li><a href="#">Арнайы көрсетілімдер</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>КИНОТЕАТРЛАР</h4>
+                    <ul>
+                        <li><a href="#">SPACE Galaxy</a></li>
+                        <li><a href="#">SPACE Nebula</a></li>
+                        <li><a href="#">SPACE Orbit</a></li>
+                        <li><a href="#">SPACE Quantum</a></li>
+                        <li><a href="#">Барлық кинотеатрлар</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>КОМПАНИЯ</h4>
+                    <ul>
+                        <li><a href="#">Біз туралы</a></li>
+                        <li><a href="#">Мансап</a></li>
+                        <li><a href="#">Жаңалықтар</a></li>
+                        <li><a href="#">Байланыс</a></li>
+                        <li><a href="#">Көмек</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>ҚОСЫМША</h4>
+                    <div class="app-badges">
+                        <a href="#" class="app-badge">
+                            <i class="fab fa-apple"></i>
+                            <div>
+                                <span>App Store</span>
+                                <small>Жүктеу</small>
+                            </div>
+                        </a>
+                        <a href="#" class="app-badge">
+                            <i class="fab fa-google-play"></i>
+                            <div>
+                                <span>Google Play</span>
+                                <small>Алу</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2024 SPACE CINEMA. Барлық құқықтар қорғалған.
+                </div>
+                <div class="footer-links">
+                    <a href="#">Құпиялылық саясаты</a>
+                    <a href="#">Пайдалану шарттары</a>
+                    <a href="#">Cookie баптаулары</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2><i class="fas fa-user-astronaut"></i> КІРУ</h2>
+            <form id="loginForm">
+                <input type="email" placeholder="Электрондық пошта" required>
+                <input type="password" placeholder="Құпия сөз" required>
+                <button type="submit" class="btn-modal">КІРУ</button>
+                <p class="modal-link">Аккаунтыңыз жоқ па? <a href="#" id="showRegister">Тіркелу</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2><i class="fas fa-user-plus"></i> ТІРКЕЛУ</h2>
+            <form id="registerForm">
+                <input type="text" placeholder="Аты-жөні" required>
+                <input type="email" placeholder="Электрондық пошта" required>
+                <input type="password" placeholder="Құпия сөз" required>
+                <input type="password" placeholder="Құпия сөзді растау" required>
+                <button type="submit" class="btn-modal">ТІРКЕЛУ</button>
+                <p class="modal-link">Аккаунтыңыз бар ма? <a href="#" id="showLogin">Кіру</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
