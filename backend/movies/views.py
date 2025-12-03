@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .models import Movie, Cinema, Showtime, Booking
 from .serializers import MovieSerializer, CinemaSerializer, ShowtimeSerializer, BookingSerializer, BookingCreateSerializer, UserSerializer
-
+from .serializers import RegisterSerializer, LoginSerializer
+from rest_framework.views import APIView
+from rest_framework import status
 # Фильмы
 class MovieListView(generics.ListAPIView):
     queryset = Movie.objects.all()
@@ -29,10 +31,21 @@ class ShowtimeListView(generics.ListAPIView):
 @api_view(['GET'])
 def available_seats(request, showtime_id):
     showtime = Showtime.objects.get(id=showtime_id)
-    total_seats = showtime.cinema.total_seats
-    booked_seats = Booking.objects.filter(showtime=showtime).values_list('seat_number', flat=True)
-    free_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
-    return Response({'free_seats': free_seats})
+    total_normal = showtime.cinema.total_seats
+    total_vip = showtime.cinema.vip_seats
+
+    booked = Booking.objects.filter(showtime=showtime)
+    booked_normal = booked.filter(is_vip=False).values_list('seat_number', flat=True)
+    booked_vip = booked.filter(is_vip=True).values_list('seat_number', flat=True)
+
+    free_normal = [seat for seat in range(1, total_normal + 1) if seat not in booked_normal]
+    free_vip = [seat for seat in range(1, total_vip + 1) if seat not in booked_vip]
+
+    return Response({
+        'free_normal_seats': free_normal,
+        'free_vip_seats': free_vip
+    })
+
 
 # Бронирование
 class BookingCreateView(generics.CreateAPIView):
@@ -51,22 +64,19 @@ class BookingListView(generics.ListAPIView):
         return Booking.objects.filter(user=self.request.user)
 
 # Регистрация
-@api_view(['POST'])
-def register(request):
-    username = request.data.get('username')
-    email = request.data.get('email')
-    password = request.data.get('password')
-    if User.objects.filter(username=username).exists():
-        return Response({"error": "Username already exists"}, status=400)
-    user = User.objects.create_user(username=username, email=email, password=password)
-    return Response({"message": "User created successfully"})
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
 
-# Вход
-@api_view(['POST'])
-def login(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-    user = authenticate(username=username, password=password)
-    if user:
-        return Response({"message": "Login successful", "user_id": user.id})
-    return Response({"error": "Invalid credentials"}, status=400)
+# Логин
+class LoginView(APIView):
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+
+        return Response({
+            "id": user.id,
+            "username": user.username,  
+            "email": user.email
+        })

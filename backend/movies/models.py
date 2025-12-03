@@ -17,6 +17,7 @@ class Movie(models.Model):
 class Cinema(models.Model):
     name = models.CharField(max_length=100)
     total_seats = models.IntegerField()
+    vip_seats = models.IntegerField(default=0) # new field
 
     def __str__(self):
         return self.name
@@ -28,16 +29,19 @@ class Showtime(models.Model):
     cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, related_name='showtimes')
     start_time = models.DateTimeField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    vip_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)  # VIP seat price
 
     def __str__(self):
         return f"{self.movie.title} at {self.start_time}"
+
 
 
 # Бронирование
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     showtime = models.ForeignKey(Showtime, on_delete=models.CASCADE)
-    seat_number = models.PositiveIntegerField()  # Номер места
+    seat_number = models.PositiveIntegerField()
+    is_vip = models.BooleanField(default=False)  # new
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

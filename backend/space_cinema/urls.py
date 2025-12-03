@@ -24,6 +24,5 @@ def home(request):
 urlpatterns = [
     path('', home),
     path('admin/', admin.site.urls),
-    path('api/', include('movies.urls')),
-    
+    path('api/', include('movies.urls')),  # все API из movies
 ]

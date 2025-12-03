@@ -31,7 +31,7 @@ class BookingSerializer(serializers.ModelSerializer):
 class BookingCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ['showtime', 'seat_number']
+        fields = ('showtime', 'seat_number', 'is_vip')
 
     def validate(self, data):
         showtime = data['showtime']
@@ -44,3 +44,41 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
+
+
+# Сериализатор регистрации
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password', 'password2']
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError("Passwords do not match")
+        return data
+
+    def create(self, validated_data):
+        validated_data.pop('password2')
+        return User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
+
+
+# Сериализатор логина
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        user = authenticate(
+            username=data['username'],
+            password=data['password']
+        )
+        if not user:
+            raise serializers.ValidationError("Invalid username or password")
+        return user
