@@ -1,33 +1,73 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.contrib.auth.models import User
+from .models import User
 from django.contrib.auth import authenticate
-from .models import Movie, Cinema, Showtime, Booking
-from .serializers import MovieSerializer, CinemaSerializer, ShowtimeSerializer, BookingSerializer, BookingCreateSerializer, UserSerializer
-from .serializers import RegisterSerializer, LoginSerializer
-from rest_framework.views import APIView
-from rest_framework import status
-# Фильмы
-class MovieListView(generics.ListAPIView):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+from .models import Film, Genre, Cinema, Showtime, Booking
+from .serializers import (
+    FilmSerializer, GenreSerializer, CinemaSerializer, ShowtimeSerializer,
+    BookingSerializer, BookingCreateSerializer, RegisterSerializer, LoginSerializer
+)
 
-class MovieDetailView(generics.RetrieveAPIView):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+# Регистрация
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+
+# Логин
+class LoginView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+        return Response({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email
+        })
+
+# Жанры
+class GenreListView(generics.ListCreateAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+# Фильмы
+class FilmListView(generics.ListCreateAPIView):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
+
+class FilmDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
 
 # Кинотеатры
-class CinemaListView(generics.ListAPIView):
+class CinemaListView(generics.ListCreateAPIView):
     queryset = Cinema.objects.all()
     serializer_class = CinemaSerializer
 
 # Сеансы
-class ShowtimeListView(generics.ListAPIView):
+class ShowtimeListView(generics.ListCreateAPIView):
     queryset = Showtime.objects.all()
     serializer_class = ShowtimeSerializer
 
-# Свободные места
+# Бронирование
+class BookingCreateView(generics.CreateAPIView):
+    serializer_class = BookingCreateSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class BookingListView(generics.ListAPIView):
+    serializer_class = BookingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Booking.objects.filter(user=self.request.user)
+
+# Доступные места
 @api_view(['GET'])
 def available_seats(request, showtime_id):
     showtime = Showtime.objects.get(id=showtime_id)
@@ -45,38 +85,3 @@ def available_seats(request, showtime_id):
         'free_normal_seats': free_normal,
         'free_vip_seats': free_vip
     })
-
-
-# Бронирование
-class BookingCreateView(generics.CreateAPIView):
-    serializer_class = BookingCreateSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-# Список своих броней
-class BookingListView(generics.ListAPIView):
-    serializer_class = BookingSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return Booking.objects.filter(user=self.request.user)
-
-# Регистрация
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
-
-# Логин
-class LoginView(APIView):
-    def post(self, request):
-        serializer = LoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-
-        return Response({
-            "id": user.id,
-            "username": user.username,  
-            "email": user.email
-        })

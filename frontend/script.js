@@ -4,6 +4,10 @@ const CONFIG = {
     autoSlideInterval: 5000,
     assetsPath: 'assets/'
 };
+// Тестовый запрос к API
+fetch("http://localhost:8000/api/movies/")
+  .then(res => res.json())
+  .then(data => console.log(data));
 
 // Данные фильмов
 const MOVIES = [

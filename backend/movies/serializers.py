@@ -1,10 +1,18 @@
 from rest_framework import serializers
-from .models import Movie, Cinema, Showtime, Booking
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from .models import User
+from .models import Film, Genre, Cinema, Showtime, Booking
 
-class MovieSerializer(serializers.ModelSerializer):
+class GenreSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Movie
+        model = Genre
+        fields = '__all__'
+
+class FilmSerializer(serializers.ModelSerializer):
+    genres = GenreSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Film
         fields = '__all__'
 
 class CinemaSerializer(serializers.ModelSerializer):
@@ -13,7 +21,7 @@ class CinemaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ShowtimeSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer(read_only=True)
+    film = FilmSerializer(read_only=True)
     cinema = CinemaSerializer(read_only=True)
 
     class Meta:
@@ -21,9 +29,6 @@ class ShowtimeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BookingSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)
-    showtime = ShowtimeSerializer(read_only=True)
-
     class Meta:
         model = Booking
         fields = '__all__'
@@ -37,7 +42,7 @@ class BookingCreateSerializer(serializers.ModelSerializer):
         showtime = data['showtime']
         seat_number = data['seat_number']
         if Booking.objects.filter(showtime=showtime, seat_number=seat_number).exists():
-            raise serializers.ValidationError(f"Seat {seat_number} is already booked for this showtime.")
+            raise serializers.ValidationError(f"Seat {seat_number} is already booked.")
         return data
 
 class UserSerializer(serializers.ModelSerializer):
@@ -45,8 +50,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email']
 
-
-# Сериализатор регистрации
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
@@ -62,23 +65,14 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password2')
-        return User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
+        return User.objects.create_user(**validated_data)
 
-
-# Сериализатор логина
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
 
     def validate(self, data):
-        user = authenticate(
-            username=data['username'],
-            password=data['password']
-        )
+        user = authenticate(username=data['username'], password=data['password'])
         if not user:
             raise serializers.ValidationError("Invalid username or password")
         return user

@@ -1,62 +1,104 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
-# Фильм
-class Movie(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    duration = models.IntegerField(help_text="Длительность в минутах")
-    release_date = models.DateField()
-    poster = models.ImageField(upload_to='posters/', blank=True, null=True)
+# Пользователь
+class User(AbstractUser):
+    date_joined = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.title
+    groups = models.ManyToManyField(
+        Group,
+        related_name='custom_user_set',
+        blank=True,
+        help_text='The groups this user belongs to.',
+        verbose_name='groups',
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name='custom_user_permissions_set',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        verbose_name='user permissions',
+    )
 
-
-# Кинотеатр / Зал
-class Cinema(models.Model):
-    name = models.CharField(max_length=100)
-    total_seats = models.IntegerField()
-    vip_seats = models.IntegerField(default=0) # new field
+# Жанры
+class Genre(models.Model):
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
 
-
-# Сеанс
-class Showtime(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='showtimes')
-    cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, related_name='showtimes')
-    start_time = models.DateTimeField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    vip_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)  # VIP seat price
+# Кинотеатры
+class Cinema(models.Model):
+    name = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
+    halls = models.IntegerField(default=1)
+    total_seats = models.IntegerField(default=100)
+    vip_seats = models.IntegerField(default=10)
 
     def __str__(self):
-        return f"{self.movie.title} at {self.start_time}"
+        return self.name
 
+# Фильмы
+class Film(models.Model):
+    TYPE_CHOICES = [
+        ('now', 'Now'),
+        ('soon', 'Soon')
+    ]
 
+    title = models.CharField(max_length=255)
+    original_title = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    year = models.IntegerField()
+    duration = models.CharField(max_length=50, blank=True, null=True)
+    average_rating = models.FloatField(default=0.0)
+    poster_url = models.TextField(blank=True, null=True)
+    video_url = models.TextField(blank=True, null=True)
+    badge = models.CharField(max_length=50, blank=True, null=True)
+    director = models.CharField(max_length=255, blank=True, null=True)
+    cast = models.JSONField(blank=True, null=True)
+    price = models.IntegerField(default=0)
+    age_rating = models.PositiveIntegerField(default=0)
+    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='now')
+    genres = models.ManyToManyField(Genre, related_name='films')
+
+    def __str__(self):
+        return self.title
+
+# Сеансы
+class Showtime(models.Model):
+    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name='showtimes')
+    cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, related_name='showtimes')
+    time = models.CharField(max_length=10)
+    price = models.IntegerField(default=0)
+    vip_price = models.IntegerField(default=0)
 
 # Бронирование
 class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookings')
+    showtime = models.ForeignKey(Showtime, on_delete=models.CASCADE, related_name='bookings')
+    seat_number = models.IntegerField()
+    is_vip = models.BooleanField(default=False)
+
+# История просмотров
+class UserHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    showtime = models.ForeignKey(Showtime, on_delete=models.CASCADE)
-    seat_number = models.PositiveIntegerField()
-    is_vip = models.BooleanField(default=False)  # new
+    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    watched_at = models.DateTimeField(auto_now_add=True)
+
+# Оценки
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    score = models.IntegerField()  # 1-5
+
+# Комментарии
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ('showtime', 'seat_number')  # одно место на один сеанс
-
-    def __str__(self):
-        return f"{self.user.username} - {self.showtime.movie.title} - Seat {self.seat_number}"
-
-
-# Платежи
-class Payment(models.Model):
-    booking = models.OneToOneField(Booking, on_delete=models.CASCADE, related_name='payment')
-    amount = models.DecimalField(max_digits=8, decimal_places=2)
-    status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
-    paid_at = models.DateTimeField(blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.booking} - {self.status}"
+# Любимые фильмы
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    film = models.ForeignKey(Film, on_delete=models.CASCADE)
